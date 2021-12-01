@@ -9,7 +9,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Stream
 
-class FileInputReader(dayNumber: Number, private val readTestFile: Boolean = false) {
+class FileInputReader(dayNumber: Number, readTestFile: Boolean = false) {
 
     private val inputFile: File = File(getResourceUrlForFile(getResourceFilenameForDay(dayNumber, readTestFile)).toURI())
     private val inputFilePath = getFilePath(getResourceFilenameForDay(dayNumber, readTestFile))
