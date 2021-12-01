@@ -9,12 +9,12 @@ internal class Day1RunnerTest {
 
     @Test
     internal fun countNumIncreases_getsExpectedResult_forWindowSize1_fromTestFile() {
-        assertThat(Day1Runner(testFileName, 1).countNumIncreases()).isEqualTo(7)
+        assertThat(Day1Runner(testFileName).countNumIncreases(windowSize = 1)).isEqualTo(7)
     }
 
     @Test
     internal fun countNumIncreases_getsExpectedResult_forWindowSize3_fromTestFile() {
-        assertThat(Day1Runner(testFileName, 3).countNumIncreases()).isEqualTo(5)
+        assertThat(Day1Runner(testFileName).countNumIncreases(windowSize = 3)).isEqualTo(5)
     }
 
 }
