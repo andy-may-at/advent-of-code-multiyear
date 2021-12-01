@@ -14,9 +14,11 @@ class Day1Runner(readTestFile: Boolean = false) {
 
     fun countNumIncreases(windowSize: Int): Int {
         return inputReader
-            .getIntSequenceFromInput()
-            .windowed(size = windowSize, transform = List<Int>::sum)
-            .zipWithNext()
-            .count { (lastDepthSum, thisDepthSum) -> lastDepthSum < thisDepthSum }
+            .useInputInts {depths: Sequence<Int> ->
+                depths
+                    .windowed(size = windowSize, transform = List<Int>::sum)
+                    .zipWithNext()
+                    .count { (lastDepthSum, thisDepthSum) -> lastDepthSum < thisDepthSum }
+            }
     }
 }

@@ -1,6 +1,7 @@
 package adventofcode._2021.utils
 
 
+import java.io.File
 import java.io.FileNotFoundException
 import java.net.URL
 import java.nio.file.Files
@@ -10,8 +11,20 @@ import java.util.stream.Stream
 
 class FileInputReader(dayNumber: Number, private val readTestFile: Boolean = false) {
 
+    private val inputFile: File = File(getResourceUrlForFile(getResourceFilenameForDay(dayNumber, readTestFile)).toURI())
     private val inputFilePath = getFilePath(getResourceFilenameForDay(dayNumber, readTestFile))
 
+
+    fun <T> useInputLines(block: (Sequence<String>) -> T): T {
+        return inputFile.useLines (block = block)
+    }
+
+    fun <T> useInputInts(intBlock: (Sequence<Int>) -> T): T {
+        val stringBlock: (Sequence<String>) -> T = {
+            stringSeq -> intBlock.invoke(stringSeq.map (String::toInt))
+        }
+        return inputFile.useLines (block = stringBlock)
+    }
 
     fun getIntSequenceFromInput(): Sequence<Int> {
         return getParsedSequenceFromInput(String::toInt)
