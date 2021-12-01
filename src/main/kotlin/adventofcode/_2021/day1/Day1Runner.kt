@@ -14,7 +14,7 @@ class Day1Runner(readTestFile: Boolean = false) {
 
     fun countNumIncreases(windowSize: Int): Int {
         return inputReader
-            .iterateOverNumbersInFile()
+            .getIntSequenceFromInput()
             .windowed(size = windowSize)
             .map(List<Int>::sum)
             .zipWithNext()
