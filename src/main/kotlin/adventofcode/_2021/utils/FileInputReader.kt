@@ -4,12 +4,13 @@ package adventofcode._2021.utils
 import java.io.FileNotFoundException
 import java.net.URL
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Stream
 
-class FileInputReader(private val dayNumber: Number, private val isTest: Boolean = false) {
+class FileInputReader(dayNumber: Number, private val readTestFile: Boolean = false) {
 
-    private val inputFileUrl = getResourceUrlForFile("day-${dayNumber}${if (isTest) ".test" else ""}.txt")
+    private val inputFilePath = getFilePath(getResourceFilenameForDay(dayNumber, readTestFile))
 
 
     fun getIntSequenceFromInput(): Sequence<Int> {
@@ -21,21 +22,30 @@ class FileInputReader(private val dayNumber: Number, private val isTest: Boolean
     }
 
     fun <T> streamParsedEntriesFromInput(entryParser: (String) -> T): Stream<T> {
-        return streamStringsFromInput().map(entryParser)
+        return streamLinesFromInput().map(entryParser)
     }
 
-    fun streamStringsFromInput(): Stream<String> {
-        return Files.lines(Paths.get(inputFileUrl.toURI()))
+    fun streamLinesFromInput(): Stream<String> {
+        return Files.lines(inputFilePath)
     }
-
 
     companion object {
+
         fun <T> convertStreamToSequence(stream: Stream<T>): Sequence<T>  {
             return Sequence { stream.iterator() }
+        }
+
+        private fun getFilePath(resourceFilename: String): Path {
+            return Paths.get(getResourceUrlForFile(resourceFilename).toURI())
         }
 
         private fun getResourceUrlForFile(filename: String): URL =
                 FileInputReader::class.java.classLoader.getResource(filename)
                     ?: throw FileNotFoundException("$filename does not exist")
+
+        private fun getResourceFilenameForDay(dayNumber: Number, useTestFile: Boolean = false): String {
+            val extension = if(useTestFile) ".test.txt" else ".txt"
+            return "day-${dayNumber}" + extension
+        }
     }
 }
