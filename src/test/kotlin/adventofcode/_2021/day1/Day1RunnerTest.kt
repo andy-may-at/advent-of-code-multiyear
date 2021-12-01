@@ -7,7 +7,6 @@ internal class Day1RunnerTest {
 
     private val testFileName = "day_1.test.txt"
 
-
     @Test
     internal fun countNumIncreases_getsExpectedResult_forWindowSize1_fromTestFile() {
         assertThat(Day1Runner(testFileName, 1).countNumIncreases()).isEqualTo(7)
@@ -17,7 +16,5 @@ internal class Day1RunnerTest {
     internal fun countNumIncreases_getsExpectedResult_forWindowSize3_fromTestFile() {
         assertThat(Day1Runner(testFileName, 3).countNumIncreases()).isEqualTo(5)
     }
-
-
 
 }
