@@ -11,6 +11,13 @@ import java.util.stream.Stream
 class FileReader {
 
     companion object {
+
+        fun iterateOverNumbersInFile(filename: String): Iterable<Int> {
+            return Iterable {
+                streamNumbersFromFile(filename).iterator()
+            }
+        }
+
         fun readNumbersFromFile(filename: String): List<Int> {
 
             return streamNumbersFromFile(filename).collect(Collectors.toList())

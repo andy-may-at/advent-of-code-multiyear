@@ -10,10 +10,10 @@ fun main() {
 }
 
 class Day1Runner(private val filename: String) {
-    private val depths = FileReader.readNumbersFromFile(filename).asSequence()
+    private val depths: Iterable<Int> = FileReader.iterateOverNumbersInFile(filename)
 
     fun countNumIncreases(windowSize: Int): Int {
-        val windowSums = depths.windowed(size = windowSize).map { elements -> elements.sum()}
-        return  windowSums.windowed(size = 2).filter{ pair -> pair[0] < pair[1] }.count()
+        val windowSums = depths.windowed(size = windowSize).map { elements -> elements.sum() }
+        return windowSums.windowed(size = 2).count { pair -> pair[0] < pair[1] }
     }
 }
