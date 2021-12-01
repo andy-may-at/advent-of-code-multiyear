@@ -19,6 +19,5 @@ class Day1Runner(readTestFile: Boolean = false) {
             .map(List<Int>::sum)
             .zipWithNext()
             .count { (lastDepthSum, thisDepthSum) -> lastDepthSum < thisDepthSum }
-
     }
 }
