@@ -1,14 +1,13 @@
 package adventofcode._2021.day02
 
 import adventofcode._2021.utils.DayRunner
-import adventofcode._2021.utils.Runner
 
 
 fun main() {
     Day2Runner().printResults()
 }
 
-class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile), Runner {
+class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile) {
 
     override fun part1(): Int {
         return applyMovesFromInput(part1Rule).product
@@ -37,7 +36,7 @@ class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile), Run
     private fun applyMovesFromInput(operation: (State, Move) -> State): State {
         return inputReader.useInputLines {lines ->
             lines
-                .map{ Move.fromString(it)}
+                .map{ Move.fromString(it) }
                 .fold(State(), operation)
         }
     }

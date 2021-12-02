@@ -1,14 +1,13 @@
 package adventofcode._2021.day01
 
 import adventofcode._2021.utils.DayRunner
-import adventofcode._2021.utils.Runner
 
 
 fun main() {
     Day1Runner().printResults()
 }
 
-class Day1Runner(readTestFile: Boolean = false) : DayRunner(1, readTestFile), Runner {
+class Day1Runner(readTestFile: Boolean = false) : DayRunner(1, readTestFile) {
 
     override fun part1(): Int = countNumIncreases(windowSize = 1)
     override fun part2(): Int = countNumIncreases(windowSize = 3)

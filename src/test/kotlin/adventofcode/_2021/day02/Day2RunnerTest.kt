@@ -4,7 +4,7 @@ import adventofcode._2021.testutils.DayRunnerTestWrapper
 import adventofcode._2021.testutils.Expected
 
 class Day2RunnerTest: DayRunnerTestWrapper(
-    runnerProvider = {readTestFile -> Day2Runner(readTestFile) },
+    runnerProvider = { readTestFile -> Day2Runner(readTestFile) },
     Expected(
         part1Test = 150,
         part2Test = 900,
