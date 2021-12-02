@@ -19,7 +19,7 @@ abstract class DayRunner(dayNumber: Int, readTestFile: Boolean) {
         return inputReader.useInputLines(part2LineProcessor)
     }
 
-    open var part1LineProcessor: LinesToIntProcessor = { -9999999 }
-    open var part2LineProcessor: LinesToIntProcessor = { -9999999 }
+    var part1LineProcessor: LinesToIntProcessor = { -9999999 }
+    var part2LineProcessor: LinesToIntProcessor = { -9999999 }
 }
 
