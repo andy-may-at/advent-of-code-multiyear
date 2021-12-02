@@ -1,18 +1,19 @@
 package adventofcode._2021.day1
 
-import adventofcode._2021.utils.FileInputReader
+import adventofcode._2021.utils.DayRunner
+import adventofcode._2021.utils.Runner
 
 
 fun main() {
-    val runner = Day1Runner()
-    println("Num increases in depth = ${runner.countNumIncreases(windowSize = 1)}")
-    println("Num increases in depth based on window size 3 = ${runner.countNumIncreases(windowSize = 3)}")
+    Day1Runner().printResults()
 }
 
-class Day1Runner(readTestFile: Boolean = false) {
-    private val inputReader = FileInputReader(dayNumber = 1, readTestFile)
+class Day1Runner(readTestFile: Boolean = false) : DayRunner(1, readTestFile), Runner {
 
-    fun countNumIncreases(windowSize: Int): Int {
+    override fun part1(): Int = countNumIncreases(windowSize = 1)
+    override fun part2(): Int = countNumIncreases(windowSize = 3)
+
+    private fun countNumIncreases(windowSize: Int): Int {
         return inputReader
             .useInputInts {depths: Sequence<Int> ->
                 depths

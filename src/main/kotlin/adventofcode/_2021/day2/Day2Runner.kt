@@ -1,17 +1,23 @@
 package adventofcode._2021.day2
 
-import adventofcode._2021.utils.FileInputReader
-import java.lang.IllegalArgumentException
+import adventofcode._2021.utils.DayRunner
+import adventofcode._2021.utils.Runner
 
 
 fun main() {
-    val runner = Day2Runner()
-    println("Part 1 Distance = ${runner.calcPart1Distance()}")
-    println("Part 2 Distance = ${runner.calcPart2Distance()}")
+    Day2Runner().printResults()
 }
 
-class Day2Runner(readTestFile: Boolean = false) {
-    private val inputReader = FileInputReader(dayNumber = 2, readTestFile)
+class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile), Runner {
+
+    override fun part1(): Int {
+        return applyMovesFromInput(part1Rule).product
+    }
+
+    override fun part2(): Int {
+        return applyMovesFromInput(part2Rule).product
+    }
+
 
     private val part1Rule = { state: State, m: Move, ->
         when(m.direction) {
@@ -29,13 +35,7 @@ class Day2Runner(readTestFile: Boolean = false) {
         }
     }
 
-    fun calcPart1Distance(): Int {
-        return applyMovesFromInput(part1Rule).product
-    }
 
-    fun calcPart2Distance(): Int {
-        return applyMovesFromInput(part2Rule).product
-    }
 
     private fun applyMovesFromInput(operation: (State, Move) -> State): State {
         return inputReader.useInputLines {lines ->
@@ -59,7 +59,7 @@ class Day2Runner(readTestFile: Boolean = false) {
                 if(direction == null) {
                     throw IllegalArgumentException("invalid direction in move: $this")
                 }
-                return Move(direction, distance)
+                return Move(direction = direction, distance = distance)
             }
         }
     }
