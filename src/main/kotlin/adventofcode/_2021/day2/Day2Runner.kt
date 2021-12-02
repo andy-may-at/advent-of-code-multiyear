@@ -14,21 +14,21 @@ class Day2Runner(readTestFile: Boolean = false) {
     private val inputReader = FileInputReader(dayNumber = 2, readTestFile)
 
     fun calcPart1Distance(): Int {
-        val action = { m: Move,s: State -> m.applyPart1RuleToState(s)}
+        val action = { s: State, m: Move, -> m.applyPart1RuleToState(s) }
         return applyMovesFromInput(action).product
     }
 
     fun calcPart2Distance(): Int {
-        val action = { m: Move,s: State -> m.applyPart2RuleToState(s)}
+        val action = { s: State, m: Move, -> m.applyPart2RuleToState(s) }
         return applyMovesFromInput(action).product
     }
 
-    private fun applyMovesFromInput(action: (Move, State) -> State): State {
-        var state = State(0, 0, 0)
-        inputReader
-            .getParsedSequenceFromInput { Move.fromString(it) }
-            .forEach { state = action.invoke(it, state) }
-        return state
+    private fun applyMovesFromInput(action: ( State, Move) -> State): State {
+        return inputReader.useInputLines {lines ->
+            lines
+                .map{ Move.fromString(it)}
+                .fold(State(0, 0, 0),  action)
+        }
     }
 
 
