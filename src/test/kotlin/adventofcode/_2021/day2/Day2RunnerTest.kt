@@ -14,8 +14,12 @@ internal class Day2RunnerTest {
     }
 
     @Test
-    internal fun calcDistance_getsExpectedResult_fromTestFile() {
-        assertThat(runner.calcDistance()).isEqualTo(150)
+    internal fun calcPart1Distance_getsExpectedResult_fromTestFile() {
+        assertThat(runner.calcPart1Distance()).isEqualTo(150)
+    }
+    @Test
+    internal fun calcPart2Distance_getsExpectedResult_fromTestFile() {
+        assertThat(runner.calcPart2Distance()).isEqualTo(900)
     }
 
 }
