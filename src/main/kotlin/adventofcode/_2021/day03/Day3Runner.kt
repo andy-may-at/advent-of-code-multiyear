@@ -1,4 +1,4 @@
-package adventofcode._2021.day3
+package adventofcode._2021.day03
 
 import adventofcode._2021.utils.DayRunner
 import adventofcode._2021.utils.Runner

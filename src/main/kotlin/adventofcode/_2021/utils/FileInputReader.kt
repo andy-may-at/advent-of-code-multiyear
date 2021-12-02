@@ -61,7 +61,7 @@ class FileInputReader(dayNumber: Number, readTestFile: Boolean = false) {
 
         private fun getResourceFilenameForDay(dayNumber: Number, useTestFile: Boolean = false): String {
             val extension = if(useTestFile) ".test.txt" else ".txt"
-            return "day-${dayNumber}" + extension
+            return "day-" + "%02d".format(dayNumber) + extension
         }
     }
 }

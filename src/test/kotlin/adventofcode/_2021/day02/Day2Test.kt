@@ -1,4 +1,4 @@
-package adventofcode._2021.day2
+package adventofcode._2021.day02
 
 import adventofcode._2021.testutils.DayRunnerTestWrapper
 
