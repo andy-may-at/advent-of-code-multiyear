@@ -9,11 +9,9 @@ fun main() {
 
 class Day3Runner(readTestFile: Boolean = false): DayRunner(3, readTestFile) {
 
-    override fun part1(): Int {
-        return inputReader.getParsedSequenceFromInput { it }.count()
+    init {
+        part1LineProcessor = Sequence<String>::count
+        part2LineProcessor = Sequence<String>::count
     }
 
-    override fun part2(): Int {
-        return inputReader.getParsedSequenceFromInput { it }.count()
-    }
 }
