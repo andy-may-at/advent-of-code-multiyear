@@ -18,7 +18,6 @@ class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile), Run
         return applyMovesFromInput(part2Rule).product
     }
 
-
     private val part1Rule = { state: State, m: Move, ->
         when(m.direction) {
             Direction.FORWARD -> state.copy(horiz = state.horiz + m.distance)

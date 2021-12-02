@@ -8,5 +8,3 @@ abstract class DayRunner(dayNumber: Int, readTestFile: Boolean): Runner {
         println("Part 2 = ${part2()}")
     }
 }
-
-

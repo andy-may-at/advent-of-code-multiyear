@@ -3,7 +3,7 @@ package adventofcode._2021.day01
 import adventofcode._2021.testutils.DayRunnerTestWrapper
 import adventofcode._2021.testutils.Expected
 
-class Day1Test: DayRunnerTestWrapper(
+class Day1RunnerTest: DayRunnerTestWrapper(
     runnerProvider = {readTestFile -> Day1Runner(readTestFile)},
     Expected(
         part1Test = 7,
