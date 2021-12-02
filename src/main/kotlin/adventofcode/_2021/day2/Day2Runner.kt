@@ -13,31 +13,43 @@ fun main() {
 class Day2Runner(readTestFile: Boolean = false) {
     private val inputReader = FileInputReader(dayNumber = 2, readTestFile)
 
-    fun calcPart1Distance(): Int {
-        val action = { s: State, m: Move, -> m.applyPart1RuleToState(s) }
-        return applyMovesFromInput(action).product
-    }
-
-    fun calcPart2Distance(): Int {
-        val action = { s: State, m: Move, -> m.applyPart2RuleToState(s) }
-        return applyMovesFromInput(action).product
-    }
-
-    private fun applyMovesFromInput(action: ( State, Move) -> State): State {
-        return inputReader.useInputLines {lines ->
-            lines
-                .map{ Move.fromString(it)}
-                .fold(State(0, 0, 0),  action)
+    private val part1Rule = { state: State, m: Move, ->
+        when(m.direction) {
+            Direction.FORWARD -> state.copy(horiz = state.horiz + m.distance)
+            Direction.DOWN -> state.copy(depth = state.depth + m.distance)
+            Direction.UP -> state.copy(depth = state.depth - m.distance)
         }
     }
 
+    private val part2Rule = { state: State, m: Move, ->
+        when(m.direction) {
+            Direction.FORWARD -> state.copy(horiz = state.horiz + m.distance, depth = state.depth + (state.aim * m.distance))
+            Direction.DOWN -> state.copy(aim = state.aim + m.distance)
+            Direction.UP -> state.copy(aim = state.aim - m.distance)
+        }
+    }
 
-    data class State (val aim: Int = 0, val horiz: Int, val depth: Int) {
+    fun calcPart1Distance(): Int {
+        return applyMovesFromInput(part1Rule).product
+    }
+
+    fun calcPart2Distance(): Int {
+        return applyMovesFromInput(part2Rule).product
+    }
+
+    private fun applyMovesFromInput(operation: (State, Move) -> State): State {
+        return inputReader.useInputLines {lines ->
+            lines
+                .map{ Move.fromString(it)}
+                .fold(State(), operation)
+        }
+    }
+
+    data class State (val aim: Int = 0, val horiz: Int = 0, val depth: Int = 0) {
         val product: Int = horiz * depth
     }
 
     data class Move(val direction: Direction, val distance: Int) {
-
         companion object {
             fun fromString(str: String): Move {
                 val parts = str.split(" ")
@@ -48,22 +60,6 @@ class Day2Runner(readTestFile: Boolean = false) {
                     throw IllegalArgumentException("invalid direction in move: $this")
                 }
                 return Move(direction, distance)
-            }
-        }
-
-        fun applyPart1RuleToState(state:State): State {
-            return when(direction) {
-                Direction.FORWARD -> state.copy(horiz = state.horiz + distance)
-                Direction.DOWN -> state.copy(depth = state.depth + distance)
-                Direction.UP -> state.copy(depth = state.depth - distance)
-            }
-        }
-
-        fun applyPart2RuleToState(state:State): State {
-            return when (direction) {
-                Direction.FORWARD -> state.copy(horiz = state.horiz + distance, depth = state.depth + (state.aim * distance))
-                Direction.DOWN -> state.copy(aim = state.aim + distance)
-                Direction.UP -> state.copy(aim = state.aim - distance)
             }
         }
     }
