@@ -35,8 +35,6 @@ class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile), Run
         }
     }
 
-
-
     private fun applyMovesFromInput(operation: (State, Move) -> State): State {
         return inputReader.useInputLines {lines ->
             lines

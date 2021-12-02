@@ -7,25 +7,36 @@ import org.junit.jupiter.api.Test
 
 open class DayRunnerTestWrapper(
     private val runnerProvider: (readTestFile: Boolean) -> Runner,
-    private val expectedPart1: Int,
-    private val expectedPart2: Int,
+    private val expected: Expected,
 ) {
 
-    private lateinit var runner: Runner
+    private lateinit var runnerWithTestFile: Runner
+    private lateinit var runnerWithRealFile: Runner
 
     @BeforeEach
     internal fun setUp() {
-        runner = runnerProvider.invoke(true)
+        runnerWithTestFile = runnerProvider.invoke(true)
+        runnerWithRealFile = runnerProvider.invoke(false)
     }
 
     @Test
     internal fun part1_getsExpectedResult_fromTestFile() {
-        assertThat(runner.part1()).isEqualTo(expectedPart1)
+        assertThat(runnerWithTestFile.part1()).isEqualTo(expected.part1Test)
     }
 
     @Test
     internal fun part2_getsExpectedResult_fromTestFile() {
-        assertThat(runner.part2()).isEqualTo(expectedPart2)
+        assertThat(runnerWithTestFile.part2()).isEqualTo(expected.part2Test)
+    }
+
+    @Test
+    internal fun part1_getsExpectedResult_fromRealFile() {
+        assertThat(runnerWithRealFile.part1()).isEqualTo(expected.part1Answer)
+    }
+
+    @Test
+    internal fun part2_getsExpectedResult_fromRealFile() {
+        assertThat(runnerWithRealFile.part2()).isEqualTo(expected.part2Answer)
     }
 
 }
