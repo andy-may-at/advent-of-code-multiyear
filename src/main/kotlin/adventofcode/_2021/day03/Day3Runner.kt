@@ -1,7 +1,6 @@
 package adventofcode._2021.day03
 
 import adventofcode.utils.DayRunner
-import kotlin.math.pow
 
 
 fun main() {
@@ -47,36 +46,26 @@ class Day3Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
 
 
     fun findStringForPart2(list: List<String>, lookingForMostCommon: Boolean, ifEqualNumbersPickOnes: Boolean, charIndex: Int): String {
-        val stringLength = list[0].length
-
-        assert(charIndex < stringLength)
-        assert(stringLength > 0)
 
         val (indexOfFirstOneAtPosition, numOnesComparedToNumZeros) = examineListAtCharIndex(list, charIndex)
-
         val keepingOnesWhenSplitting: Boolean = if(numOnesComparedToNumZeros == 0) ifEqualNumbersPickOnes else (lookingForMostCommon == (numOnesComparedToNumZeros > 0))
-
         val subList = splitList(list, indexOfFirstOneAtPosition, lookingForOnes = keepingOnesWhenSplitting)
 
         return if(subList.size == 1) {
             subList[0]
         } else {
-            findStringForPart2(list = subList, lookingForMostCommon = lookingForMostCommon, ifEqualNumbersPickOnes = ifEqualNumbersPickOnes, charIndex = charIndex + 1)
+            findStringForPart2(
+                list = subList,
+                lookingForMostCommon = lookingForMostCommon,
+                ifEqualNumbersPickOnes = ifEqualNumbersPickOnes,
+                charIndex = charIndex + 1)
         }
     }
 
     fun examineListAtCharIndex(list: List<String>, charIndex: Int): Pair<Int, Int> {
-        val stringLength = list[0].length
-        val listLength = list.size
-
-        assert(charIndex < stringLength)
-        assert(listLength > 0)
-
-        val indexOfFirstOneAtPosition = list.indexOfFirst { string -> string[charIndex] == '1'}
-
-        val numZeros = indexOfFirstOneAtPosition
-        val numOnes = listLength - numZeros
-        val numOnesComparedToNumZeros = numOnes.compareTo(numZeros)
+        val indexOfFirstOneAtPosition = list.indexOfFirst { string -> string[charIndex] == '1' }
+        val numOnes = list.size - indexOfFirstOneAtPosition
+        val numOnesComparedToNumZeros = numOnes.compareTo(indexOfFirstOneAtPosition)
 
         return Pair(indexOfFirstOneAtPosition, numOnesComparedToNumZeros)
     }
@@ -84,10 +73,8 @@ class Day3Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
 
     fun splitList(list: List<String>, indexOfFirstOne: Int, lookingForOnes: Boolean): List<String> {
         return if(lookingForOnes) {
-            assert(indexOfFirstOne != -1) // none of digit we're looking for ... shouldn't happen
             list.subList(indexOfFirstOne, list.size)
         } else {
-            assert(indexOfFirstOne != 0) // none of digit we're looking for ... shouldn't happen
             list.subList(0, indexOfFirstOne)
         }
     }
