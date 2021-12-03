@@ -10,8 +10,8 @@ class Day3RunnerTest: DayRunnerTestWrapper(
     Expected(
         part1Test = 198,
         part1Answer = 1082324,
-        part2Test = 23,
-        part2Answer = -1,
+        part2Test = 230,
+        part2Answer = 1353024,
     ),
 ) {
 
