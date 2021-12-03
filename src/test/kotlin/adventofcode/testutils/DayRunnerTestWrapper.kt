@@ -1,6 +1,6 @@
-package adventofcode._2021.testutils
+package adventofcode.testutils
 
-import adventofcode._2021.utils.DayRunner
+import adventofcode.utils.DayRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,15 +26,15 @@ open class DayRunnerTestWrapper(
     }
 
     @Test
-    internal fun part2_getsExpectedResult_fromTestFile() {
-        assertThat(runnerWithTestFile.part2())
-            .isEqualTo(expected.part2Test)
-    }
-
-    @Test
     internal fun part1_getsExpectedResult_fromRealFile() {
         assertThat(runnerWithRealFile.part1())
             .isEqualTo(expected.part1Answer)
+    }
+
+    @Test
+    internal fun part2_getsExpectedResult_fromTestFile() {
+        assertThat(runnerWithTestFile.part2())
+            .isEqualTo(expected.part2Test)
     }
 
     @Test

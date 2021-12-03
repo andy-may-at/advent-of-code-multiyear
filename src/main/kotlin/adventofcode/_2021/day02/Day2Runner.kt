@@ -3,8 +3,8 @@ package adventofcode._2021.day02
 import adventofcode._2021.day02.Direction.DOWN
 import adventofcode._2021.day02.Direction.FORWARD
 import adventofcode._2021.day02.Direction.UP
-import adventofcode._2021.utils.DayRunner
-import adventofcode._2021.utils.LinesToIntProcessor
+import adventofcode.utils.DayRunner
+import adventofcode.utils.LinesToIntProcessor
 
 
 fun main() {
@@ -13,7 +13,7 @@ fun main() {
 
 typealias MoveApplier = (State, Move) -> State
 
-class Day2Runner(readTestFile: Boolean = false): DayRunner(2, readTestFile) {
+class Day2Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumber = 2, readTestFile = readTestFile) {
 
     private val part1MoveApplier: MoveApplier = { state: State, m: Move, ->
         when(m.direction) {

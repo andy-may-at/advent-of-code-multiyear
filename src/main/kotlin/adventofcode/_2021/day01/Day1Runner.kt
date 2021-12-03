@@ -1,20 +1,20 @@
 package adventofcode._2021.day01
 
-import adventofcode._2021.utils.DayRunner
-import adventofcode._2021.utils.LinesToIntProcessor
+import adventofcode.utils.DayRunner
+import adventofcode.utils.LinesToIntProcessor
 
 
 fun main() {
     Day1Runner().printResults()
 }
 
-class Day1Runner(readTestFile: Boolean = false) : DayRunner(1, readTestFile) {
+class Day1Runner(readTestFile: Boolean = false) : DayRunner(dayNumber = 1, readTestFile = readTestFile) {
     init {
-        part1LineProcessor = processLines(windowSize = 1)
-        part2LineProcessor = processLines(windowSize = 3)
+        part1LineProcessor = buildLineProcessor(windowSize = 1)
+        part2LineProcessor = buildLineProcessor(windowSize = 3)
     }
 
-    private fun processLines(windowSize: Int): LinesToIntProcessor = {
+    private fun buildLineProcessor(windowSize: Int): LinesToIntProcessor = {
             depths: Sequence<String> ->
                 depths
                     .map(String::toInt)

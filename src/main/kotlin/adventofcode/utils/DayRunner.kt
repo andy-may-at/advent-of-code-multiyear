@@ -1,10 +1,11 @@
-package adventofcode._2021.utils
+package adventofcode.utils
+
 
 typealias LinesToIntProcessor = (Sequence<String>) -> Int
 
-abstract class DayRunner(dayNumber: Int, readTestFile: Boolean) {
+abstract class DayRunner(year: Number = 2021, dayNumber: Int, readTestFile: Boolean) {
 
-    private val inputReader = FileInputReader(dayNumber = dayNumber, readTestFile)
+    val inputReader = FileInputReader(year = year, dayNumber = dayNumber, readTestFile = readTestFile)
 
     fun printResults() {
         println("Part 1 = ${part1()}")

@@ -1,7 +1,7 @@
 package adventofcode._2021.day01
 
-import adventofcode._2021.testutils.DayRunnerTestWrapper
-import adventofcode._2021.testutils.Expected
+import adventofcode.testutils.DayRunnerTestWrapper
+import adventofcode.testutils.Expected
 
 class Day1RunnerTest: DayRunnerTestWrapper(
     runnerProvider = { readTestFile -> Day1Runner(readTestFile) },

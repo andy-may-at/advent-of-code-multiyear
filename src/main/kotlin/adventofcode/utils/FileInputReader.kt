@@ -1,4 +1,4 @@
-package adventofcode._2021.utils
+package adventofcode.utils
 
 
 import java.io.File
@@ -9,9 +9,9 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Stream
 
-class FileInputReader(dayNumber: Number, readTestFile: Boolean = false) {
+class FileInputReader(year: Number = 2021, dayNumber: Number, readTestFile: Boolean = false) {
 
-    private val inputFileName = getResourceFilenameForDay(dayNumber, readTestFile)
+    private val inputFileName = getResourceFilenameForDay(year, dayNumber, readTestFile)
     private val inputFileUri = getResourceUriForFile(inputFileName)
     private val inputFilePath = getResourceUriForFile(inputFileName).toPath()
     private val inputFile: File = File(inputFileUri)
@@ -59,9 +59,9 @@ class FileInputReader(dayNumber: Number, readTestFile: Boolean = false) {
                 FileInputReader::class.java.classLoader.getResource(filename)?.toURI()
                     ?: throw FileNotFoundException("$filename does not exist")
 
-        private fun getResourceFilenameForDay(dayNumber: Number, useTestFile: Boolean = false): String {
+        private fun getResourceFilenameForDay(year: Number, dayNumber: Number, useTestFile: Boolean = false): String {
             val extension = if(useTestFile) ".test.txt" else ".txt"
-            return "day-" + "%02d".format(dayNumber) + extension
+            return "$year/day-" + "%02d".format(dayNumber) + extension
         }
     }
 }
