@@ -28,6 +28,7 @@ class Day3Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
 
 
         part2LineProcessor = { lines: Sequence<String> ->
+            // Sort the output once early on, then we can just keep finding the point where 0's turn to 1 at a char index to split the list
             val list = lines.sorted().toList()
 
             val (indexOfFirstOneAtPosition, numOnesComparedToNumZeros) = examineListAtCharIndex(list, 0)
@@ -40,7 +41,7 @@ class Day3Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
             val o2Rating = findStringForPart2(o2List, lookingForMostCommon = true, ifEqualNumbersPickOnes = true, charIndex = 1)
             val co2Rating = findStringForPart2(co2List, lookingForMostCommon = false, ifEqualNumbersPickOnes = false, charIndex = 1)
 
-            (o2Rating.toUInt(2) * co2Rating.toUInt(2)).toInt()
+            o2Rating.toInt(2) * co2Rating.toInt(2)
         }
     }
 
@@ -117,9 +118,7 @@ class Day3Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
         }
 
         fun binaryAsIntArrayToDecimalNumber(binaryAsInts: List<Int>): Int {
-            return binaryAsInts
-                .mapIndexed { index, bit -> bit * ((2.0).pow(binaryAsInts.size - index - 1)).toInt() }
-                .sum()
+            return binaryAsInts.joinToString("").toInt(2)
         }
     }
 
