@@ -2,26 +2,17 @@ package adventofcode._2021.day04
 
 import adventofcode.utils.DayRunner
 
-
 fun main() {
     Day4Runner().printResults()
 }
 
-typealias IndexAndBits = Pair<Int, IntArray>
-
 class Day4Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumber = 4, readTestFile = readTestFile) {
-
 
     override fun part1(): Int {
         val (numbersToCall: List<Int>, cards: MutableList<Card>) = parseInput()
 
-        printAllCards(cards)
-
-
         for (number in numbersToCall) {
-            println ("Calling $number")
             val winningScore: Int? = cards.firstNotNullOfOrNull { it.markNumberAndCheckForWinningScore(number) }
-            printAllCards(cards)
             if (winningScore != null) {
                 return winningScore
             }
@@ -29,28 +20,20 @@ class Day4Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
         return -99999999
     }
 
-
-
     override fun part2(): Int {
-
         val (numbersToCall: List<Int>, cards: MutableList<Card>) = parseInput()
 
         var lastWinningScore: Int? = null
         for (number in numbersToCall) {
-            println ("Calling $number")
-
             cards.removeIf {
                 val winningScore = it.markNumberAndCheckForWinningScore(number)
                 if (winningScore != null) {
                     lastWinningScore = winningScore
                     println("WINNNER !! -> $it ")
-
                 }
                 winningScore != null
             }
-
         }
-
         return lastWinningScore!!
     }
 
@@ -77,7 +60,6 @@ class Day4Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
         }
         return Pair(numbersToCall, cards)
     }
-
 
     class LineOrColumn (private val numbers: Set<Int>) {
         val unmatchedNumbers: MutableSet<Int> = numbers.toMutableSet()
@@ -118,10 +100,6 @@ class Day4Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
             } else {
                 null
             }
-        }
-
-        fun getSumOfUnmarked(): Int {
-            return lines.map { it.unmatchedNumbers }.flatten().sum()
         }
 
         override fun toString(): String {
