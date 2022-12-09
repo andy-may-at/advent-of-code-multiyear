@@ -9,14 +9,13 @@ fun main() {
     Day2Runner().printResults()
 }
 
-
 class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumber = 2, readTestFile = readTestFile) {
     init {
         part1LineProcessor = buildPart1LineProcessor()
         part2LineProcessor = buildPart2LineProcessor()
     }
 
-    enum class Play(val value: Int ) {
+    enum class Play(val score: Int ) {
         ROCK(1),
         PAPER(2),
         SCISSORS(3);
@@ -38,7 +37,7 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
             }
         }
     }
-    enum class Outcome(val value: Int) {
+    enum class Outcome(val score: Int) {
         WIN(6),
         DRAW(3),
         LOSS(0);
@@ -68,8 +67,7 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
                     Play.thatLosesTo(theirPlay) -> Outcome.LOSS
                     else -> Outcome.DRAW
                 }
-
-            return myPlay.value + result.value
+            return myPlay.score + result.score
         }
 
         val answer: Int = rounds
@@ -100,7 +98,7 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
 
         val answer: Int = rounds
             .map { parseRound(it) }
-            .map { it.neededOutcome.value + determineMyPlay(it).value }
+            .map { it.neededOutcome.score + determineMyPlay(it).score }
             .sum()
 
         answer

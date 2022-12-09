@@ -17,7 +17,7 @@ class Day1Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
     private fun buildLineProcessor(numElves: Int): LinesToIntProcessor = { calories: Sequence<String> ->
 
         val elves: MutableList<Elf> = mutableListOf()
-        var currentElf: Elf = Elf(0)
+        var currentElf = Elf(0)
 
         elves.add(currentElf)
         calories.forEach {c ->
@@ -28,9 +28,9 @@ class Day1Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
                 currentElf.calories += c.toInt()
             }
         }
-        elves.sortByDescending { it.calories }
-        elves.take(numElves).sumOf { it.calories }
-
+        elves.sortedByDescending { it.calories }
+            .take(numElves)
+            .sumOf { it.calories }
     }
 
     data class Elf(var calories: Int)
