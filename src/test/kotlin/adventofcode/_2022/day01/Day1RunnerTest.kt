@@ -9,6 +9,6 @@ class Day1RunnerTest: DayRunnerTestWrapper(
         part1Test = 24000,
         part2Test = 45000,
         part1Answer = 72070,
-        part2Answer = -99999,
+        part2Answer = 211805,
     ),
 )
