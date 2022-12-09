@@ -48,7 +48,7 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
                 "X" -> LOSS
                 "Y" -> DRAW
                 "Z" -> WIN
-                else -> {throw IllegalArgumentException()}
+                else -> { throw IllegalArgumentException() }
             }
         }
     }
@@ -62,18 +62,11 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         fun scoreRound(plays: List<Play>): Int {
             val theirPlay = plays[0]
             val myPlay = plays[1]
-
             val result: Outcome =
                 when (myPlay) {
-                    Play.thatBeats(theirPlay) -> {
-                        Outcome.WIN
-                    }
-                    Play.thatLosesTo(theirPlay) -> {
-                        Outcome.LOSS
-                    }
-                    else -> {
-                        Outcome.DRAW
-                    }
+                    Play.thatBeats(theirPlay) -> Outcome.WIN
+                    Play.thatLosesTo(theirPlay) -> Outcome.LOSS
+                    else -> Outcome.DRAW
                 }
 
             return myPlay.value + result.value
@@ -98,26 +91,18 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         }
 
         fun determineMyPlay(round: Round): Play {
-            val myPlay = when (round.neededOutcome) {
-                Outcome.WIN -> { Play.thatBeats(round.theirPlay) }
-                Outcome.LOSS -> { Play.thatLosesTo(round.theirPlay) }
-                else -> {
-                    round.theirPlay
-                }
+            return when (round.neededOutcome) {
+                Outcome.WIN -> Play.thatBeats(round.theirPlay)
+                Outcome.LOSS -> Play.thatLosesTo(round.theirPlay)
+                else -> round.theirPlay
             }
-            return myPlay
-        }
-
-        fun scoreRound(round: Round): Int {
-            return round.neededOutcome.value + determineMyPlay(round).value
         }
 
         val answer: Int = rounds
             .map { parseRound(it) }
-            .map { scoreRound(it) }
+            .map { it.neededOutcome.value + determineMyPlay(it).value }
             .sum()
 
         answer
     }
-
 }
