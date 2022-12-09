@@ -53,30 +53,30 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         }
     }
 
-    private fun scoreRound(plays: List<Play>): Int {
-        val theirPlay = plays[0]
-        val myPlay = plays[1]
-
-        val result: Outcome =
-            when (myPlay) {
-                Play.thatBeats(theirPlay) -> {
-                    Outcome.WIN
-                }
-                Play.thatLosesTo(theirPlay) -> {
-                    Outcome.LOSS
-                }
-                else -> {
-                    Outcome.DRAW
-                }
-            }
-
-        return myPlay.value + result.value
-    }
-
     private fun buildPart1LineProcessor(): LinesToIntProcessor = { rounds: Sequence<String> ->
 
         fun parseRound(round: String): List<Play> {
             return round.split(" ").map { Play.fromString(it) }.take(2)
+        }
+
+        fun scoreRound(plays: List<Play>): Int {
+            val theirPlay = plays[0]
+            val myPlay = plays[1]
+
+            val result: Outcome =
+                when (myPlay) {
+                    Play.thatBeats(theirPlay) -> {
+                        Outcome.WIN
+                    }
+                    Play.thatLosesTo(theirPlay) -> {
+                        Outcome.LOSS
+                    }
+                    else -> {
+                        Outcome.DRAW
+                    }
+                }
+
+            return myPlay.value + result.value
         }
 
         val answer: Int = rounds
@@ -105,7 +105,6 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
                     round.theirPlay
                 }
             }
-
             return myPlay
         }
 
