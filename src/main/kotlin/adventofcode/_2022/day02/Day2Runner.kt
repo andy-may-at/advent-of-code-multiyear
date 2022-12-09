@@ -19,12 +19,40 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
     enum class Play(val value: Int ) {
         ROCK(1),
         PAPER(2),
-        SCISSORS(3)
+        SCISSORS(3);
+
+
+
+        companion object {
+            fun fromString(s: String): Play = when(s) {
+                "A","X" -> ROCK
+                "B","Y" -> PAPER
+                "C","Z" -> SCISSORS
+                else -> {throw IllegalArgumentException()}
+            }
+
+            fun thatBeats(play: Play): Play {
+                return values()[(play.ordinal + 1) % 3]
+            }
+
+            fun thatLosesTo(play: Play): Play {
+                return values()[(play.ordinal + 2) % 3]
+            }
+        }
     }
     enum class Outcome(val value: Int) {
         WIN(6),
         DRAW(3),
-        LOSS(0)
+        LOSS(0);
+
+        companion object {
+            fun fromString(s: String): Outcome = when(s) {
+                "X" -> LOSS
+                "Y" -> DRAW
+                "Z" -> WIN
+                else -> {throw IllegalArgumentException()}
+            }
+        }
     }
 
     private val winnersToLosers = mapOf(
@@ -42,34 +70,26 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         val theirPlay = plays[0]
         val myPlay = plays[1]
 
-        val resultScore = when (theirPlay) {
-            winnersToLosers[myPlay] -> {
-                Outcome.WIN.value
+        val result: Outcome =
+            when (myPlay) {
+                Play.thatBeats(theirPlay) -> {
+                    Outcome.WIN
+                }
+                Play.thatLosesTo(theirPlay) -> {
+                    Outcome.LOSS
+                }
+                else -> {
+                    Outcome.DRAW
+                }
             }
-            losersToWinners[myPlay] -> {
-                Outcome.LOSS.value
-            }
-            else -> {
-                Outcome.DRAW.value
-            }
-        }
 
-        return myPlay.value + resultScore
+        return myPlay.value + result.value
     }
 
     private fun buildPart1LineProcessor(): LinesToIntProcessor = { rounds: Sequence<String> ->
 
-        fun parsePlay(play: String): Play {
-            return when(play) {
-                "A","X" -> Play.ROCK
-                "B","Y" -> Play.PAPER
-                "C","Z" -> Play.SCISSORS
-                else -> {throw IllegalArgumentException()}
-            }
-        }
-
         fun parseRound(round: String): List<Play> {
-            return round.split(" ").map { parsePlay(it) }.take(2)
+            return round.split(" ").map { Play.fromString(it) }.take(2)
         }
 
         val answer: Int = rounds
@@ -83,30 +103,11 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
 
         data class Round (val theirPlay: Play, val neededOutcome: Outcome)
 
-        fun parsePlay(play: String): Play {
-            return when(play) {
-                "A" -> Play.ROCK
-                "B" -> Play.PAPER
-                "C" -> Play.SCISSORS
-                else -> {throw IllegalArgumentException()}
-            }
-        }
-
-        fun parseNeededOutcome(play: String): Outcome {
-            return when(play) {
-                "X" -> Outcome.LOSS
-                "Y" -> Outcome.DRAW
-                "Z" -> Outcome.WIN
-                else -> {throw IllegalArgumentException()}
-            }
-        }
 
         fun parseRound(round: String): Round {
             val parts = round.split(" ")
-            return Round(parsePlay(parts[0]), parseNeededOutcome(parts[1]))
+            return Round(Play.fromString(parts[0]), Outcome.fromString(parts[1]))
         }
-
-
 
         fun determineMyPlay(round: Round): Play {
             val myPlay = when (round.neededOutcome) {
