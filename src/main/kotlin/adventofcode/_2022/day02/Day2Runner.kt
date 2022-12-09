@@ -21,8 +21,6 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         PAPER(2),
         SCISSORS(3);
 
-
-
         companion object {
             fun fromString(s: String): Play = when(s) {
                 "A","X" -> ROCK
@@ -54,17 +52,6 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
             }
         }
     }
-
-    private val winnersToLosers = mapOf(
-        Play.ROCK     to Play.SCISSORS,
-        Play.PAPER    to Play.ROCK,
-        Play.SCISSORS to Play.PAPER,
-    )
-    private val losersToWinners = mapOf(
-         Play.SCISSORS to Play.ROCK,
-         Play.ROCK     to Play.PAPER,
-         Play.PAPER    to Play.SCISSORS,
-    )
 
     private fun scoreRound(plays: List<Play>): Int {
         val theirPlay = plays[0]
@@ -103,26 +90,23 @@ class Day2Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
 
         data class Round (val theirPlay: Play, val neededOutcome: Outcome)
 
-
         fun parseRound(round: String): Round {
             val parts = round.split(" ")
-            return Round(Play.fromString(parts[0]), Outcome.fromString(parts[1]))
+            return Round(
+                theirPlay = Play.fromString(parts[0]),
+                neededOutcome = Outcome.fromString(parts[1]))
         }
 
         fun determineMyPlay(round: Round): Play {
             val myPlay = when (round.neededOutcome) {
-                Outcome.DRAW -> {
-                    round.theirPlay
-                }
-                Outcome.WIN -> {
-                    losersToWinners[round.theirPlay]
-                }
+                Outcome.WIN -> { Play.thatBeats(round.theirPlay) }
+                Outcome.LOSS -> { Play.thatLosesTo(round.theirPlay) }
                 else -> {
-                    winnersToLosers[round.theirPlay]
+                    round.theirPlay
                 }
             }
 
-            return myPlay!!
+            return myPlay
         }
 
         fun scoreRound(round: Round): Int {
