@@ -52,9 +52,11 @@ class Day5Runner(readTestFile: Boolean = false): DayRunner(year = 2021, dayNumbe
             }
         }
 
+
+
         grid.forEach { println (it.contentToString()) }
 
-        return grid.sumOf { gridLine -> gridLine.count { it >= 2 } }
+        return grid.sumOf { gridLine -> gridLine.count { it > 1 } }
     }
 
 

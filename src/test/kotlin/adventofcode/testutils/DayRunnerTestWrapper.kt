@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-open class DayRunnerTestWrapper(
+open abstract class DayRunnerTestWrapper(
     private val runnerProvider: (readTestFile: Boolean) -> DayRunner,
     private val expected: Expected,
 ) {
