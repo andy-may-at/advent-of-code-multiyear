@@ -5,8 +5,6 @@ import adventofcode.utils.LinesToIntProcessor
 import java.lang.IllegalArgumentException
 import java.util.*
 
-
-
 fun main() {
     Day3Runner().printResults()
 }
@@ -17,16 +15,9 @@ class Day3Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
         part2LineProcessor = buildPart2LineProcessor()
     }
 
-    private fun stringToListOfPriorities(str: String): List<Int> {
-        return str.encodeToByteArray()
-            .map { it.toInt() - 64 }
-            .map { if(it > 26) (it - 32) else (it + 26) }
-            .toList()
-    }
-
     private fun buildPart1LineProcessor(): LinesToIntProcessor = { rucksacks: Sequence<String> ->
         rucksacks
-            .map { stringToListOfPriorities(it) }
+            .map { it.asSequence().map { char -> toPriority(char) }.toList() }
             .map { it.chunked(it.count() / 2) }
             .map { it[0].intersect(it[1].toSet()).sum() }
             .sum()
@@ -35,5 +26,15 @@ class Day3Runner(readTestFile: Boolean = false) : DayRunner(year = 2022, dayNumb
     private fun buildPart2LineProcessor(): LinesToIntProcessor = { rucksacks: Sequence<String> ->
 
         12345
+    }
+
+    companion object {
+        fun toPriority(c: Char): Int {
+            return if (c.isUpperCase()) {
+                c.code - 'A'.code + 27
+            } else {
+                c.code - 'a'.code + 1
+            }
+        }
     }
 }
